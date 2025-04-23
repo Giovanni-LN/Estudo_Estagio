@@ -1,9 +1,9 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class CreateTableAddress1745334969168 implements MigrationInterface {
+export class createTableAddress1675388996374 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     queryRunner.query(`
-            CREATE TABLE public.address (
+             CREATE TABLE public.address (
                  id integer NOT NULL,
                  user_id integer NOT NULL,
                  complement character varying,
@@ -28,12 +28,12 @@ export class CreateTableAddress1745334969168 implements MigrationInterface {
              ALTER SEQUENCE public.address_id_seq OWNED BY public.address.id;
              
              ALTER TABLE ONLY public.address ALTER COLUMN id SET DEFAULT nextval('public.address_id_seq'::regclass);
-            `);
+         `);
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
     queryRunner.query(`
-            drop table public.address;
-            `);
+             drop table public.address;
+         `);
   }
 }

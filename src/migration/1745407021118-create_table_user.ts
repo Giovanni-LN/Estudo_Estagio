@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-floating-promises */
+/* eslint-disable prettier/prettier */
+/* eslint-disable @typescript-eslint/require-await */
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
 export class createTableUser1675388649812 implements MigrationInterface {

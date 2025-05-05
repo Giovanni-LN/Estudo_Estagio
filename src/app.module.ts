@@ -1,12 +1,15 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
+import { APP_GUARD } from '@nestjs/core';
+import { JwtModule } from '@nestjs/jwt'; // <- Importação correta
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AddressModule } from './address/address.module';
+import { AuthModule } from './auth/auth.module';
 import { CacheModule } from './cache/cache.module';
 import { CityModule } from './city/city.module';
+import { RolesGuard } from './guards/roles.guard';
 import { StateModule } from './state/state.module';
 import { UserModule } from './user/user.module';
-import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -24,6 +27,10 @@ import { AuthModule } from './auth/auth.module';
       migrations: [`${__dirname}/migration/{.ts,*.js}`],
       migrationsRun: true,
     }),
+    JwtModule.register({
+      secret: process.env.JWT_SECRET,
+      signOptions: { expiresIn: '1d' },
+    }),
     UserModule,
     StateModule,
     CityModule,
@@ -32,6 +39,11 @@ import { AuthModule } from './auth/auth.module';
     AuthModule,
   ],
   controllers: [],
-  providers: [],
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: RolesGuard,
+    },
+  ],
 })
 export class AppModule {}

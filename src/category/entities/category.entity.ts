@@ -1,20 +1,17 @@
-import { ProductEntity } from 'src/product/entities/product.entity';
 import {
-    Column,
-    CreateDateColumn,
-    Entity,
-    OneToMany,
-    PrimaryGeneratedColumn,
-    UpdateDateColumn,
+  Column,
+  CreateDateColumn,
+  Entity,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
+import { ProductEntity } from '../../product/entities/product.entity';
 
 @Entity({ name: 'category' })
 export class CategoryEntity {
   @PrimaryGeneratedColumn('rowid')
   id: number;
-
-  @Column({ name: 'state_id', nullable: false })
-  stateId: number;
 
   @Column({ name: 'name', nullable: false })
   name: string;
@@ -26,5 +23,5 @@ export class CategoryEntity {
   updatedAt: Date;
 
   @OneToMany(() => ProductEntity, (product: ProductEntity) => product.category)
-  products: ProductEntity;
+  products?: ProductEntity;
 }

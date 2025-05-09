@@ -1,13 +1,13 @@
 import {
-    Body,
-    Controller,
-    Get,
-    Post,
-    UsePipes,
-    ValidationPipe,
+  Body,
+  Controller,
+  Get,
+  Post,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
-import { Roles } from 'src/decorators/roles.drcorator';
-import { UserType } from 'src/user/enum/user-type.enum';
+import { Roles } from '../decorators/roles.drcorator';
+import { UserType } from '../user/enum/user-type.enum';
 import { CategoryService } from './category.service';
 import { CreateCategoryDto } from './dtos/create-category.dto';
 import { ReturnCategoryDto } from './dtos/return-category.dto';

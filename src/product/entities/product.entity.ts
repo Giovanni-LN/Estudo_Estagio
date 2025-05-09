@@ -1,11 +1,11 @@
 import {
-    Column,
-    CreateDateColumn,
-    Entity,
-    JoinColumn,
-    ManyToOne,
-    PrimaryGeneratedColumn,
-    UpdateDateColumn,
+  Column,
+  CreateDateColumn,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 import { CategoryEntity } from '../../category/entities/category.entity';
 
@@ -13,9 +13,6 @@ import { CategoryEntity } from '../../category/entities/category.entity';
 export class ProductEntity {
   @PrimaryGeneratedColumn('rowid')
   id: number;
-
-  @Column({ name: 'state_id', nullable: false })
-  stateId: number;
 
   @Column({ name: 'name', nullable: false })
   name: string;
@@ -40,5 +37,5 @@ export class ProductEntity {
     (category: CategoryEntity) => category.products,
   )
   @JoinColumn({ name: 'category_id', referencedColumnName: 'id' })
-  category: CategoryEntity;
+  category?: CategoryEntity;
 }

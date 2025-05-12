@@ -2,7 +2,7 @@ import { MigrationInterface, QueryRunner } from 'typeorm';
 
 export class insertInState1675458748572 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
-    queryRunner.query(`
+    await queryRunner.query(`
              INSERT INTO state("id", "name", "uf") VALUES (1, 'Acre', 'AC');
              INSERT INTO state("id", "name", "uf") VALUES (2, 'Alagoas', 'AL');
              INSERT INTO state("id", "name", "uf") VALUES (3, 'Amazonas', 'AM');
@@ -34,7 +34,7 @@ export class insertInState1675458748572 implements MigrationInterface {
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
-    queryRunner.query(`
+    await queryRunner.query(`
              DELETE FROM public.state;
          `);
   }

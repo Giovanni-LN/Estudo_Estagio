@@ -12,6 +12,7 @@ import { StateModule } from './state/state.module';
 import { UserModule } from './user/user.module';
 import { CategoryModule } from './category/category.module';
 import { ProductModule } from './product/product.module';
+import { CartModule } from './cart/cart.module';
 
 @Module({
   imports: [
@@ -41,6 +42,7 @@ import { ProductModule } from './product/product.module';
     AuthModule,
     CategoryModule,
     ProductModule,
+    CartModule,
   ],
   controllers: [],
   providers: [

@@ -6,8 +6,8 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { hash } from 'bcrypt';
-import { validatePassword } from 'src/utils/password';
 import { Repository } from 'typeorm';
+import { validatePassword } from '../utils/password';
 import { CreateUserDto } from './dtos/createUser.dto';
 import { UpdatePasswordDto } from './dtos/update-password.dto';
 import { UserEntity } from './entities/user.entity';

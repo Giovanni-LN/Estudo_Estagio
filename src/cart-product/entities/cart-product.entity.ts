@@ -10,7 +10,7 @@ import {
 import { CartEntity } from '../../cart/entities/cart.entity';
 import { ProductEntity } from '../../product/entities/product.entity';
 
-@Entity({ name: 'product' })
+@Entity({ name: 'cart_product' })
 export class CartProductEntity {
   @PrimaryGeneratedColumn('rowid')
   id: number;
@@ -34,7 +34,7 @@ export class CartProductEntity {
     () => ProductEntity,
     (productEntity: ProductEntity) => productEntity.cartProduct,
   )
-  @JoinColumn({ name: 'produtc_id', referencedColumnName: 'id' })
+  @JoinColumn({ name: 'product_id', referencedColumnName: 'id' })
   product?: ProductEntity;
 
   @ManyToOne(() => CartEntity, (cartEntity) => cartEntity.cartProduct)

@@ -1,4 +1,3 @@
-import { CartProductEntity } from 'src/cart-product/entities/cart-product.entity';
 import {
   Column,
   CreateDateColumn,
@@ -7,6 +6,7 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
+import { CartProductEntity } from '../../cart-product/entities/cart-product.entity';
 
 @Entity({ name: 'cart' })
 export class CartEntity {
@@ -15,6 +15,9 @@ export class CartEntity {
 
   @Column({ name: 'user_id', nullable: false })
   userId: number;
+
+  @Column({ name: 'active', nullable: false })
+  active: boolean;
 
   @CreateDateColumn({ name: 'created_at' })
   createdAt: Date;

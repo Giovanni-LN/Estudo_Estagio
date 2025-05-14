@@ -26,5 +26,5 @@ export class CartEntity {
   updatedAt: Date;
 
   @OneToMany(() => CartProductEntity, (cartProduct) => cartProduct.cart)
-  cartProduct?: CartProductEntity;
+  cartProduct?: CartProductEntity[];
 }

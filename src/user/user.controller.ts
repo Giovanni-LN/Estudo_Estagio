@@ -8,8 +8,8 @@ import {
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
-import { Roles } from 'src/decorators/roles.drcorator';
-import { UserId } from 'src/decorators/user-id.decorator';
+import { Roles } from '../decorators/roles.drcorator';
+import { UserId } from '../decorators/user-id.decorator';
 import { CreateUserDto } from './dtos/createUser.dto';
 import { ReturnUserDto } from './dtos/returnUser.dto';
 import { UpdatePasswordDto } from './dtos/update-password.dto';

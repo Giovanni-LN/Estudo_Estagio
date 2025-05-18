@@ -3,6 +3,7 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { returnDeleteMock } from '../../__mocks__/return-delete.mock';
 import { cartMock } from '../../cart/__mock__/cart.mock';
+import { insertCartMock } from '../../cart/__mock__/insert-cart.mock';
 import { productMock } from '../../product/__mocks__/product.mock';
 import { ProductService } from '../../product/product.service';
 import { CartProductService } from '../cart-product.service';
@@ -54,6 +55,23 @@ describe('CartProductService', () => {
     );
 
     expect(deleteResult).toEqual(returnDeleteMock);
+  });
+
+  it('should return error in exception delete', async () => {
+    jest.spyOn(cartProductRepository, 'delete').mockRejectedValue(new Error());
+
+    await expect(
+      service.deleteProductCart(productMock.id, cartMock.id),
+    ).rejects.toThrowError();
+  });
+
+  it('should return CartProduct after create', async () => {
+    const productCart = await service.createProductInCart(
+      insertCartMock,
+      cartMock.id,
+    );
+
+    expect(productCart).toEqual(returnDeleteMock);
   });
 
   it('should return error in exception delete', async () => {

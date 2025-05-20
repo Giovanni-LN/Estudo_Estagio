@@ -1,12 +1,12 @@
 import {
-  Body,
-  Controller,
-  Get,
-  Post,
-  UsePipes,
-  ValidationPipe,
+    Body,
+    Controller,
+    Get,
+    Post,
+    UsePipes,
+    ValidationPipe,
 } from '@nestjs/common';
-import { Roles } from '../decorators/roles.drcorator';
+import { Roles } from '../decorators/roles.decorator';
 import { UserId } from '../decorators/user-id.decorator';
 import { UserType } from '../user/enum/user-type.enum';
 import { AddressService } from './address.service';

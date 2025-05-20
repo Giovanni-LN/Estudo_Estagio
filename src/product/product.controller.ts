@@ -1,16 +1,16 @@
 import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  Post,
-  Put,
-  UsePipes,
-  ValidationPipe,
+    Body,
+    Controller,
+    Delete,
+    Get,
+    Param,
+    Post,
+    Put,
+    UsePipes,
+    ValidationPipe,
 } from '@nestjs/common';
 import { DeleteResult } from 'typeorm';
-import { Roles } from '../decorators/roles.drcorator';
+import { Roles } from '../decorators/roles.decorator';
 import { UserType } from '../user/enum/user-type.enum';
 import { CreateProductDto } from './dtos/create-product.dto';
 import { ReturnProductDto } from './dtos/return-product.dto';

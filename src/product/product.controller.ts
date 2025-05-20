@@ -1,19 +1,19 @@
 import {
-    Body,
-    Controller,
-    Delete,
-    Get,
-    Param,
-    Post,
-    Put,
-    UsePipes,
-    ValidationPipe,
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
 import { DeleteResult } from 'typeorm';
 import { Roles } from '../decorators/roles.decorator';
 import { UserType } from '../user/enum/user-type.enum';
 import { CreateProductDto } from './dtos/create-product.dto';
-import { ReturnProductDto } from './dtos/return-product.dto';
+import { ReturnProduct } from './dtos/return-product.dto';
 import { UpdateProductDto } from './dtos/update-product.dto';
 import { ProductEntity } from './entities/product.entity';
 import { ProductService } from './product.service';
@@ -24,9 +24,9 @@ export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
   @Get()
-  async findAll(): Promise<ReturnProductDto[]> {
-    return (await this.productService.findAll()).map(
-      (product) => new ReturnProductDto(product),
+  async findAll(): Promise<ReturnProduct[]> {
+    return (await this.productService.findAll([], true)).map(
+      (product) => new ReturnProduct(product),
     );
   }
 
@@ -51,9 +51,9 @@ export class ProductController {
   @UsePipes(ValidationPipe)
   @Put('/:productId')
   async updateProduct(
-    @Param('productId') productId: number,
     @Body() updateProduct: UpdateProductDto,
+    @Param('productId') productId: number,
   ): Promise<ProductEntity> {
-    return this.productService.updateProduct(productId, updateProduct);
+    return this.productService.updateProduct(updateProduct, productId);
   }
 }

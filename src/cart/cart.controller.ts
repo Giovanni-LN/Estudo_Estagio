@@ -1,24 +1,24 @@
 import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  Patch,
-  Post,
-  UsePipes,
-  ValidationPipe,
+    Body,
+    Controller,
+    Delete,
+    Get,
+    Param,
+    Patch,
+    Post,
+    UsePipes,
+    ValidationPipe,
 } from '@nestjs/common';
+import { DeleteResult } from 'typeorm';
 import { Roles } from '../decorators/roles.decorator';
 import { UserId } from '../decorators/user-id.decorator';
 import { UserType } from '../user/enum/user-type.enum';
-import { DeleteResult } from 'typeorm';
 import { CartService } from './cart.service';
 import { InsertCartDTO } from './dtos/insert-cart.dto';
 import { ReturnCartDTO } from './dtos/return-cart.dto';
 import { UpdateCartDTO } from './dtos/update-cart.dto';
 
-@Roles(UserType.User, UserType.Admin)
+@Roles(UserType.User, UserType.Admin, UserType.Root)
 @Controller('cart')
 export class CartController {
   constructor(private readonly cartService: CartService) {}

@@ -1,8 +1,8 @@
+import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { Test, TestingModule } from '@nestjs/testing';
-import { CacheService } from '../cache.service';
 import { Cache } from 'cache-manager';
 import { userEntityMock } from '../../user/__mocks__/user.mock';
-import { CACHE_MANAGER } from '@nestjs/common';
+import { CacheService } from '../cache.service';
 
 describe('CacheService', () => {
   let service: CacheService;

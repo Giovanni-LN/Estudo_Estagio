@@ -1,6 +1,9 @@
 import { IsNumber, IsString } from 'class-validator';
 
-export class CreateProductDto {
+export class CreateProductDTO {
+  @IsNumber()
+  categoryId: number;
+
   @IsString()
   name: string;
 
@@ -9,7 +12,4 @@ export class CreateProductDto {
 
   @IsString()
   image: string;
-
-  @IsNumber()
-  categoryId: number;
 }

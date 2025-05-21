@@ -1,14 +1,17 @@
 import { MigrationInterface, QueryRunner } from 'typeorm';
 
-export class AlterTableUser1746447252829 implements MigrationInterface {
+export class alterTableState1675458729381 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(`
-        alter table public.user add unique (email);
-    `);
+            ALTER TABLE state
+                ADD uf varchar(2) NOT NULL;
+        `);
   }
 
   public async down(queryRunner: QueryRunner): Promise<void> {
     await queryRunner.query(`
-    `);
+            ALTER TABLE state
+                drop uf;
+        `);
   }
 }

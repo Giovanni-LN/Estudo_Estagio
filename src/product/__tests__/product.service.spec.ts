@@ -117,7 +117,7 @@ describe('ProductService', () => {
   });
 
   it('should return error in product not found', async () => {
-    jest.spyOn(productRepository, 'findOne').mockResolvedValue(null);
+    jest.spyOn(productRepository, 'findOne').mockResolvedValue(undefined);
 
     await expect(
       service.findProductById(productMock.id),

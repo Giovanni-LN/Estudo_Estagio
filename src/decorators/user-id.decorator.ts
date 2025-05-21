@@ -1,13 +1,12 @@
-import { createParamDecorator } from '@nestjs/common';
-import { ExecutionContextHost } from '@nestjs/core/helpers/execution-context-host';
-import { authorizationToLoginPayload } from '../utils/base-64-converter';
+import { createParamDecorator, ExecutionContext } from '@nestjs/common';
+import { Request } from 'express';
+import { authorizantionToLoginPayload } from '../utils/base-64-converter';
 
-export const UserId = createParamDecorator((_, ctx: ExecutionContextHost) => {
-  const { authorization } = ctx.switchToHttp().getRequest().headers;
+export const UserId = createParamDecorator((_, ctx: ExecutionContext) => {
+  const request = ctx.switchToHttp().getRequest<Request>();
+  const { authorization } = request.headers;
 
-  const loginPayload = authorizationToLoginPayload(authorization);
+  const loginPayload = authorizantionToLoginPayload(authorization);
 
   return loginPayload?.id;
-
-  return 1;
 });

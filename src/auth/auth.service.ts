@@ -16,12 +16,11 @@ export class AuthService {
   ) {}
 
   async login(loginDto: LoginDto): Promise<ReturnLogin> {
-    const user: UserEntity | undefined = await this.userService
-      .findUserByEmail(loginDto.email)
-      .catch(() => undefined);
-
-    if (!user) {
-      throw new NotFoundException('Email or password invalid');
+    let user: UserEntity | undefined;
+    try {
+      user = await this.userService.findUserByEmail(loginDto.email);
+    } catch {
+      user = undefined;
     }
 
     const isMatch = await validatePassword(
@@ -29,9 +28,10 @@ export class AuthService {
       user?.password || '',
     );
 
-    if (!isMatch) {
-      throw new NotFoundException('Email or password invalid');
+    if (!user || !isMatch) {
+      throw new NotFoundException('Email or passord invalid');
     }
+
     return {
       accessToken: this.jwtService.sign({ ...new LoginPayload(user) }),
       user: new ReturnUserDto(user),

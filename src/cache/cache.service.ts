@@ -1,16 +1,16 @@
+import { CACHE_MANAGER } from '@nestjs/cache-manager';
 import { Inject, Injectable } from '@nestjs/common';
-import { CACHE_MANAGER } from '@nestjs/common/cache';
 import { Cache } from 'cache-manager';
 
 @Injectable()
 export class CacheService {
-  constructor(@Inject(CACHE_MANAGER) private readonly cacheManager: Cache) {}
+  constructor(@Inject(CACHE_MANAGER) private cacheManager: Cache) {}
 
   async getCache<T>(
     key: string,
     functionRequest: () => Promise<T>,
   ): Promise<T> {
-    const allData = (await this.cacheManager.get(key)) as T | null;
+    const allData: T = await this.cacheManager.get(key);
 
     if (allData) {
       return allData;

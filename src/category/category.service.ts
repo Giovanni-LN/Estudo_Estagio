@@ -1,11 +1,16 @@
 import {
   BadRequestException,
+  forwardRef,
+  Inject,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { CountProduct } from '../product/dtos/count-product.dto';
+import { ProductService } from '../product/product.service';
 import { Repository } from 'typeorm';
-import { CreateCategoryDto } from './dtos/create-category.dto';
+import { CreateCategory } from './dtos/create-category.dto';
+import { ReturnCategory } from './dtos/return-category.dto';
 import { CategoryEntity } from './entities/category.entity';
 
 @Injectable()
@@ -13,15 +18,42 @@ export class CategoryService {
   constructor(
     @InjectRepository(CategoryEntity)
     private readonly categoryRepository: Repository<CategoryEntity>,
+
+    @Inject(forwardRef(() => ProductService))
+    private readonly productService: ProductService,
   ) {}
 
-  async findAllCategories(): Promise<CategoryEntity[]> {
+  findAmountCategoryInProducts(
+    category: CategoryEntity,
+    countList: CountProduct[],
+  ): number {
+    const count = countList.find(
+      (itemCount) => itemCount.category_id === category.id,
+    );
+
+    if (count) {
+      return count.total;
+    }
+
+    return 0;
+  }
+
+  async findAllCategories(): Promise<ReturnCategory[]> {
     const categories = await this.categoryRepository.find();
+
+    const count = await this.productService.countProdutsByCategoryId();
+
     if (!categories || categories.length === 0) {
       throw new NotFoundException('Categories empty');
     }
 
-    return categories;
+    return categories.map(
+      (category) =>
+        new ReturnCategory(
+          category,
+          this.findAmountCategoryInProducts(category, count),
+        ),
+    );
   }
 
   async findCategoryById(categoryId: number): Promise<CategoryEntity> {
@@ -46,24 +78,25 @@ export class CategoryService {
     });
 
     if (!category) {
-      throw new NotFoundException(`Category with name ${name} not found`);
+      throw new NotFoundException(`Category name ${name} not found`);
     }
 
     return category;
   }
 
   async createCategory(
-    createCategory: CreateCategoryDto,
+    createCategory: CreateCategory,
   ): Promise<CategoryEntity> {
     const category = await this.findCategoryByName(createCategory.name).catch(
       () => undefined,
     );
+
     if (category) {
       throw new BadRequestException(
-        `Category with name ${createCategory.name} already exists`,
+        `Category name ${createCategory.name} exist`,
       );
     }
 
-    return await this.categoryRepository.save(createCategory);
+    return this.categoryRepository.save(createCategory);
   }
 }

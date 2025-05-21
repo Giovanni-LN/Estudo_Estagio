@@ -7,6 +7,6 @@ import { StateService } from './state.service';
 @Module({
   imports: [TypeOrmModule.forFeature([StateEntity])],
   controllers: [StateController],
-  providers: [StateService]
+  providers: [StateService],
 })
 export class StateModule {}

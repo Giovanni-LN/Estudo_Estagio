@@ -12,7 +12,7 @@ import { AddressEntity } from '../entities/address.entity';
 
 describe('AddressService', () => {
   let service: AddressService;
-  let addressRepositoty: Repository<AddressEntity>;
+  let addressRepository: Repository<AddressEntity>;
   let userService: UserService;
   let cityService: CityService;
 
@@ -45,7 +45,7 @@ describe('AddressService', () => {
     service = module.get<AddressService>(AddressService);
     userService = module.get<UserService>(UserService);
     cityService = module.get<CityService>(CityService);
-    addressRepositoty = module.get<Repository<AddressEntity>>(
+    addressRepository = module.get<Repository<AddressEntity>>(
       getRepositoryToken(AddressEntity),
     );
   });
@@ -54,7 +54,7 @@ describe('AddressService', () => {
     expect(service).toBeDefined();
     expect(userService).toBeDefined();
     expect(cityService).toBeDefined();
-    expect(addressRepositoty).toBeDefined();
+    expect(addressRepository).toBeDefined();
   });
 
   it('should return address after save', async () => {
@@ -89,7 +89,7 @@ describe('AddressService', () => {
   });
 
   it('should return not found if not address registred', async () => {
-    jest.spyOn(addressRepositoty, 'find').mockResolvedValue([]);
+    jest.spyOn(addressRepository, 'find').mockResolvedValue(undefined);
 
     await expect(
       service.findAddressByUserId(userEntityMock.id),

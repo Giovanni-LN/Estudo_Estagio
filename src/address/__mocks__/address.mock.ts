@@ -3,14 +3,12 @@ import { userEntityMock } from '../../user/__mocks__/user.mock';
 import { AddressEntity } from '../entities/address.entity';
 
 export const addressMock: AddressEntity = {
-  cep: '12345678',
+  cep: '43253252',
   cityId: cityMock.id,
-  complement: 'complementMock',
+  complement: 'llkdfja',
   createdAt: new Date(),
-  id: 123123,
+  id: 57546,
   numberAddress: 654,
   updatedAt: new Date(),
   userId: userEntityMock.id,
-  user: userEntityMock,
-  city: cityMock,
 };

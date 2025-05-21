@@ -12,7 +12,7 @@ import { Roles } from '../decorators/roles.decorator';
 import { UserId } from '../decorators/user-id.decorator';
 import { CreateUserDto } from './dtos/createUser.dto';
 import { ReturnUserDto } from './dtos/returnUser.dto';
-import { UpdatePasswordDto } from './dtos/update-password.dto';
+import { UpdatePasswordDTO } from './dtos/update-password.dto';
 import { UserEntity } from './entities/user.entity';
 import { UserType } from './enum/user-type.enum';
 import { UserService } from './user.service';
@@ -47,7 +47,7 @@ export class UserController {
   @Patch()
   @UsePipes(ValidationPipe)
   async updatePasswordUser(
-    @Body() updatePasswordDTO: UpdatePasswordDto,
+    @Body() updatePasswordDTO: UpdatePasswordDTO,
     @UserId() userId: number,
   ): Promise<UserEntity> {
     return this.userService.updatePasswordUser(updatePasswordDTO, userId);

@@ -1,3 +1,5 @@
+import { AddressEntity } from '../../address/entities/address.entity';
+import { StateEntity } from '../../state/entities/state.entity';
 import {
   Column,
   CreateDateColumn,
@@ -8,9 +10,6 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { AddressEntity } from '../../address/entities/address.entity';
-import { StateEntity } from '../../state/entities/state.entity';
-import { UserEntity } from '../../user/entities/user.entity';
 
 @Entity({ name: 'city' })
 export class CityEntity {
@@ -34,5 +33,5 @@ export class CityEntity {
 
   @ManyToOne(() => StateEntity, (state) => state.cities)
   @JoinColumn({ name: 'state_id', referencedColumnName: 'id' })
-  state?: UserEntity;
+  state?: StateEntity;
 }

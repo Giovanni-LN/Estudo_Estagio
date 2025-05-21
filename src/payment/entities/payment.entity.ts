@@ -1,10 +1,15 @@
+import { OrderEntity } from '../../order/entities/order.entity';
+import { PaymentStatusEntity } from '../../payment-status/entities/payment-status.entity';
 import {
-    Column,
-    CreateDateColumn,
-    Entity,
-    PrimaryGeneratedColumn,
-    TableInheritance,
-    UpdateDateColumn,
+  Column,
+  CreateDateColumn,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  TableInheritance,
+  UpdateDateColumn,
 } from 'typeorm';
 
 @Entity({ name: 'payment' })
@@ -33,4 +38,23 @@ export abstract class PaymentEntity {
 
   @UpdateDateColumn({ name: 'updated_at' })
   updatedAt: Date;
+
+  @OneToMany(() => OrderEntity, (order) => order.payment)
+  orders?: OrderEntity[];
+
+  @ManyToOne(() => PaymentStatusEntity, (payment) => payment.payments)
+  @JoinColumn({ name: 'status_id', referencedColumnName: 'id' })
+  paymentStatus?: PaymentStatusEntity;
+
+  constructor(
+    statusId: number,
+    price: number,
+    discount: number,
+    finalPrice: number,
+  ) {
+    this.statusId = statusId;
+    this.price = price;
+    this.discount = discount;
+    this.finalPrice = finalPrice;
+  }
 }

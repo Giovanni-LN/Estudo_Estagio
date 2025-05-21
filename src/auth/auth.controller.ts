@@ -12,6 +12,7 @@ import { ReturnLogin } from './dtos/returnLogin.dto';
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
+
   @UsePipes(ValidationPipe)
   @Post()
   async login(@Body() loginDto: LoginDto): Promise<ReturnLogin> {

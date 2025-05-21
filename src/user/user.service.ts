@@ -5,11 +5,10 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { hash } from 'bcrypt';
 import { Repository } from 'typeorm';
-import { validatePassword } from '../utils/password';
+import { createPasswordHashed, validatePassword } from '../utils/password';
 import { CreateUserDto } from './dtos/createUser.dto';
-import { UpdatePasswordDto } from './dtos/update-password.dto';
+import { UpdatePasswordDTO } from './dtos/update-password.dto';
 import { UserEntity } from './entities/user.entity';
 import { UserType } from './enum/user-type.enum';
 
@@ -20,24 +19,15 @@ export class UserService {
     private readonly userRepository: Repository<UserEntity>,
   ) {}
 
-  async createPasswordHashed(password: string): Promise<string> {
-    const saltOrRounds = 10;
-
-    return hash(password, saltOrRounds);
-  }
-
   async createUser(createUserDto: CreateUserDto): Promise<UserEntity> {
     const user = await this.findUserByEmail(createUserDto.email).catch(
       () => undefined,
     );
 
     if (user) {
-      throw new BadGatewayException('this email already exists');
+      throw new BadGatewayException('email registered in system');
     }
-
-    const passwordHashed = await this.createPasswordHashed(
-      createUserDto.password,
-    );
+    const passwordHashed = await createPasswordHashed(createUserDto.password);
 
     return this.userRepository.save({
       ...createUserDto,
@@ -47,7 +37,7 @@ export class UserService {
   }
 
   async getUserByIdUsingRelations(userId: number): Promise<UserEntity> {
-    const user = await this.userRepository.findOne({
+    return this.userRepository.findOne({
       where: {
         id: userId,
       },
@@ -59,12 +49,6 @@ export class UserService {
         },
       },
     });
-
-    if (!user) {
-      throw new NotFoundException(`User with ID ${userId} not found`);
-    }
-
-    return user;
   }
 
   async getAllUser(): Promise<UserEntity[]> {
@@ -100,17 +84,17 @@ export class UserService {
   }
 
   async updatePasswordUser(
-    UpdatePasswordDto: UpdatePasswordDto,
+    updatePasswordDTO: UpdatePasswordDTO,
     userId: number,
   ): Promise<UserEntity> {
     const user = await this.findUserById(userId);
 
-    const passwordHashed = await this.createPasswordHashed(
-      UpdatePasswordDto.newPassword,
+    const passwordHashed = await createPasswordHashed(
+      updatePasswordDTO.newPassword,
     );
 
     const isMatch = await validatePassword(
-      UpdatePasswordDto.lastPassword,
+      updatePasswordDTO.lastPassword,
       user.password || '',
     );
 

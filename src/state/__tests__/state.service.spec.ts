@@ -1,9 +1,9 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { StateEntity } from '../../state/entities/state.entity';
-import { StateService } from '../../state/state.service';
 import { stateMock } from '../__mocks__/state.mock';
+import { StateEntity } from '../entities/state.entity';
+import { StateService } from '../state.service';
 
 describe('StateService', () => {
   let service: StateService;
@@ -33,13 +33,13 @@ describe('StateService', () => {
     expect(stateRepository).toBeDefined();
   });
 
-  it('should return lis of state', async () => {
-    const states = await service.getAllState();
+  it('should return list of states', async () => {
+    const state = await service.getAllState();
 
-    expect(states).toEqual([stateMock]);
+    expect(state).toEqual([stateMock]);
   });
 
-  it('should return erro in exception', async () => {
+  it('should return error in exception', async () => {
     jest.spyOn(stateRepository, 'find').mockRejectedValueOnce(new Error());
 
     await expect(service.getAllState()).rejects.toThrowError();

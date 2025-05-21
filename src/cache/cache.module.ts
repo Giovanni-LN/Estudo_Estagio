@@ -5,7 +5,7 @@ import { CacheService } from './cache.service';
 @Module({
   imports: [
     CacheModuleNest.register({
-      ttl: 900,
+      ttl: 900000000,
     }),
   ],
   providers: [CacheService],

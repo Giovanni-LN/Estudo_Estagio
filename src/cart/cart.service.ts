@@ -1,12 +1,12 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DeleteResult, Repository } from 'typeorm';
 import { CartProductService } from '../cart-product/cart-product.service';
-import { InsertCartDto } from './dtos/insert-cart.dto';
-import { UpdateCartDto } from './dtos/update-cart.dto copy';
+import { DeleteResult, Repository } from 'typeorm';
+import { InsertCartDTO } from './dtos/insert-cart.dto';
+import { UpdateCartDTO } from './dtos/update-cart.dto';
 import { CartEntity } from './entities/cart.entity';
 
-const LINE_AFECTED = 1;
+const LINE_AFFECTED = 1;
 
 @Injectable()
 export class CartService {
@@ -26,7 +26,7 @@ export class CartService {
 
     return {
       raw: [],
-      affected: LINE_AFECTED,
+      affected: LINE_AFFECTED,
     };
   }
 
@@ -51,7 +51,7 @@ export class CartService {
     });
 
     if (!cart) {
-      throw new NotFoundException('Cart active not found');
+      throw new NotFoundException(`Cart active not found`);
     }
 
     return cart;
@@ -65,14 +65,14 @@ export class CartService {
   }
 
   async insertProductInCart(
-    insertCartDto: InsertCartDto,
+    insertCartDTO: InsertCartDTO,
     userId: number,
   ): Promise<CartEntity> {
     const cart = await this.findCartByUserId(userId).catch(async () => {
       return this.createCart(userId);
     });
 
-    await this.cartProductService.insertProductInCart(insertCartDto, cart);
+    await this.cartProductService.insertProductInCart(insertCartDTO, cart);
 
     return cart;
   }
@@ -87,14 +87,14 @@ export class CartService {
   }
 
   async updateProductInCart(
-    updateCartDto: UpdateCartDto,
+    updateCartDTO: UpdateCartDTO,
     userId: number,
   ): Promise<CartEntity> {
     const cart = await this.findCartByUserId(userId).catch(async () => {
       return this.createCart(userId);
     });
 
-    await this.cartProductService.updateProductInCart(updateCartDto, cart);
+    await this.cartProductService.updateProductInCart(updateCartDTO, cart);
 
     return cart;
   }

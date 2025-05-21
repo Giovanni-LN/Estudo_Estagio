@@ -1,14 +1,16 @@
+import { CityEntity } from '../../city/entities/city.entity';
+import { UserEntity } from '../../user/entities/user.entity';
 import {
   Column,
   CreateDateColumn,
   Entity,
   JoinColumn,
   ManyToOne,
+  OneToMany,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { CityEntity } from '../../city/entities/city.entity';
-import { UserEntity } from '../../user/entities/user.entity';
+import { OrderEntity } from '../../order/entities/order.entity';
 
 @Entity({ name: 'address' })
 export class AddressEntity {
@@ -18,10 +20,10 @@ export class AddressEntity {
   @Column({ name: 'user_id', nullable: false })
   userId: number;
 
-  @Column({ name: 'complement', nullable: false })
+  @Column({ name: 'complement', nullable: true })
   complement: string;
 
-  @Column({ name: 'number' })
+  @Column({ name: 'number', nullable: false })
   numberAddress: number;
 
   @Column({ name: 'cep', nullable: false })
@@ -38,9 +40,12 @@ export class AddressEntity {
 
   @ManyToOne(() => UserEntity, (user) => user.addresses)
   @JoinColumn({ name: 'user_id', referencedColumnName: 'id' })
-  user: UserEntity;
+  user?: UserEntity;
 
   @ManyToOne(() => CityEntity, (city) => city.addresses)
-  @JoinColumn({ name: 'user_id', referencedColumnName: 'id' })
-  city: CityEntity;
+  @JoinColumn({ name: 'city_id', referencedColumnName: 'id' })
+  city?: CityEntity;
+
+  @OneToMany(() => OrderEntity, (order) => order.address)
+  orders?: OrderEntity[];
 }

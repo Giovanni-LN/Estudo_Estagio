@@ -12,9 +12,9 @@ import {
 import { DeleteResult } from 'typeorm';
 import { Roles } from '../decorators/roles.decorator';
 import { UserType } from '../user/enum/user-type.enum';
-import { CreateProductDto } from './dtos/create-product.dto';
+import { CreateProductDTO } from './dtos/create-product.dto';
 import { ReturnProduct } from './dtos/return-product.dto';
-import { UpdateProductDto } from './dtos/update-product.dto';
+import { UpdateProductDTO } from './dtos/update-procut.dto';
 import { ProductEntity } from './entities/product.entity';
 import { ProductService } from './product.service';
 
@@ -34,7 +34,7 @@ export class ProductController {
   @UsePipes(ValidationPipe)
   @Post()
   async createProduct(
-    @Body() createProduct: CreateProductDto,
+    @Body() createProduct: CreateProductDTO,
   ): Promise<ProductEntity> {
     return this.productService.createProduct(createProduct);
   }
@@ -51,7 +51,7 @@ export class ProductController {
   @UsePipes(ValidationPipe)
   @Put('/:productId')
   async updateProduct(
-    @Body() updateProduct: UpdateProductDto,
+    @Body() updateProduct: UpdateProductDTO,
     @Param('productId') productId: number,
   ): Promise<ProductEntity> {
     return this.productService.updateProduct(updateProduct, productId);

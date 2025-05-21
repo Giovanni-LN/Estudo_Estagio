@@ -1,22 +1,22 @@
 import {
-    Body,
-    Controller,
-    Delete,
-    Get,
-    Param,
-    Patch,
-    Post,
-    UsePipes,
-    ValidationPipe,
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Patch,
+  Post,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
-import { DeleteResult } from 'typeorm';
 import { Roles } from '../decorators/roles.decorator';
 import { UserId } from '../decorators/user-id.decorator';
 import { UserType } from '../user/enum/user-type.enum';
+import { DeleteResult } from 'typeorm';
 import { CartService } from './cart.service';
-import { InsertCartDto } from './dtos/insert-cart.dto';
-import { ReturnCartDto } from './dtos/return-cart.dto';
-import { UpdateCartDto } from './dtos/update-cart.dto copy';
+import { InsertCartDTO } from './dtos/insert-cart.dto';
+import { ReturnCartDTO } from './dtos/return-cart.dto';
+import { UpdateCartDTO } from './dtos/update-cart.dto';
 
 @Roles(UserType.User, UserType.Admin)
 @Controller('cart')
@@ -26,17 +26,17 @@ export class CartController {
   @UsePipes(ValidationPipe)
   @Post()
   async createCart(
-    @Body() insertCart: InsertCartDto,
+    @Body() insertCart: InsertCartDTO,
     @UserId() userId: number,
-  ): Promise<ReturnCartDto> {
-    return new ReturnCartDto(
+  ): Promise<ReturnCartDTO> {
+    return new ReturnCartDTO(
       await this.cartService.insertProductInCart(insertCart, userId),
     );
   }
 
   @Get()
-  async findCartByUserId(@UserId() userId: number): Promise<ReturnCartDto> {
-    return new ReturnCartDto(
+  async findCartByUserId(@UserId() userId: number): Promise<ReturnCartDTO> {
+    return new ReturnCartDTO(
       await this.cartService.findCartByUserId(userId, true),
     );
   }
@@ -57,11 +57,11 @@ export class CartController {
   @UsePipes(ValidationPipe)
   @Patch()
   async updateProductInCart(
-    @Body() updateCartDto: UpdateCartDto,
+    @Body() updateCartDTO: UpdateCartDTO,
     @UserId() userId: number,
-  ): Promise<ReturnCartDto> {
-    return new ReturnCartDto(
-      await this.cartService.updateProductInCart(updateCartDto, userId),
+  ): Promise<ReturnCartDTO> {
+    return new ReturnCartDTO(
+      await this.cartService.updateProductInCart(updateCartDTO, userId),
     );
   }
 }

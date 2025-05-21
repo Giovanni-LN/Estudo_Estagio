@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import { ReturnCartDTO } from '../../cart/dtos/return-cart.dto';
+=======
+import { ReturnCartDto } from '../../cart/dtos/return-cart.dto';
+>>>>>>> ef7be204c79dd3042107038a54a47ba745d8c2bd
 import { ReturnProduct } from '../../product/dtos/return-product.dto';
 import { CartProductEntity } from '../entities/cart-product.entity';
 
@@ -7,8 +11,14 @@ export class ReturnCartProductDTO {
   cartId: number;
   productId: number;
   amount: number;
+<<<<<<< HEAD
   product?: ReturnProduct;
   cart?: ReturnCartDTO;
+=======
+
+  product?: ReturnProduct;
+  cart?: ReturnCartDto;
+>>>>>>> ef7be204c79dd3042107038a54a47ba745d8c2bd
 
   constructor(cartProduct: CartProductEntity) {
     this.id = cartProduct.id;

@@ -1,13 +1,13 @@
 import {
-    Body,
-    Controller,
-    Delete,
-    Get,
-    Param,
-    Post,
-    Put,
-    UsePipes,
-    ValidationPipe,
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  Put,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
 import { DeleteResult } from 'typeorm';
 import { Roles } from '../decorators/roles.decorator';
@@ -18,15 +18,23 @@ import { UpdateProductDTO } from './dtos/update-procut.dto';
 import { ProductEntity } from './entities/product.entity';
 import { ProductService } from './product.service';
 
-@Roles(UserType.Admin, UserType.Root, UserType.User)
 @Controller('product')
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
 
+  @Roles(UserType.Admin, UserType.Root, UserType.User)
   @Get()
   async findAll(): Promise<ReturnProduct[]> {
     return (await this.productService.findAll([], true)).map(
       (product) => new ReturnProduct(product),
+    );
+  }
+
+  @Roles(UserType.Admin, UserType.Root, UserType.User)
+  @Get('/:productId')
+  async findProductById(@Param('productId') productId): Promise<ReturnProduct> {
+    return new ReturnProduct(
+      await this.productService.findProductById(productId, true),
     );
   }
 

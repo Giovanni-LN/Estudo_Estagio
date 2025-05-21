@@ -1,10 +1,10 @@
 import { Test, TestingModule } from '@nestjs/testing';
+import { returnDeleteMock } from '../../__mocks__/return-delete.mock';
+import { createProductMock } from '../__mocks__/create-product.mock';
+import { productMock } from '../__mocks__/product.mock';
+import { updateProductMock } from '../__mocks__/update-product.mock';
 import { ProductController } from '../product.controller';
 import { ProductService } from '../product.service';
-import { productMock } from '../__mocks__/product.mock';
-import { createProductMock } from '../__mocks__/create-product.mock';
-import { returnDeleteMock } from '../../__mocks__/return-delete.mock';
-import { updateProductMock } from '../__mocks__/update-product.mock';
 
 describe('ProductController', () => {
   let controller: ProductController;
@@ -18,6 +18,7 @@ describe('ProductController', () => {
           useValue: {
             findAll: jest.fn().mockResolvedValue([productMock]),
             createProduct: jest.fn().mockResolvedValue(productMock),
+            findProductById: jest.fn().mockResolvedValue(productMock),
             updateProduct: jest.fn().mockResolvedValue(productMock),
             deleteProduct: jest.fn().mockResolvedValue(returnDeleteMock),
           },
@@ -44,8 +45,29 @@ describe('ProductController', () => {
         name: productMock.name,
         price: productMock.price,
         image: productMock.image,
+        diameter: productMock.diameter,
+        height: productMock.height,
+        length: productMock.length,
+        weight: productMock.weight,
+        width: productMock.width,
       },
     ]);
+  });
+
+  it('should return returnProduct in findByProductId', async () => {
+    const products = await controller.findProductById(productMock.id);
+
+    expect(products).toEqual({
+      id: productMock.id,
+      name: productMock.name,
+      price: productMock.price,
+      image: productMock.image,
+      diameter: productMock.diameter,
+      height: productMock.height,
+      length: productMock.length,
+      weight: productMock.weight,
+      width: productMock.width,
+    });
   });
 
   it('should return productEntity in createProduct', async () => {

@@ -6,14 +6,8 @@ import {
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CategoryService } from '../category/category.service';
-<<<<<<< HEAD
 import { DeleteResult, In, Repository } from 'typeorm';
 import { CreateProductDTO } from './dtos/create-product.dto';
-=======
-import { CountProduct } from './dtos/count-product.dto';
-import { CreateProductDTO } from './dtos/create-product.dto';
-import { UpdateProductDTO } from './dtos/update-product.dto';
->>>>>>> ef7be204c79dd3042107038a54a47ba745d8c2bd
 import { ProductEntity } from './entities/product.entity';
 import { UpdateProductDTO } from './dtos/update-procut.dto';
 import { CountProduct } from './dtos/count-product.dto';

@@ -6,15 +6,9 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-<<<<<<< HEAD
 import { CountProduct } from '../product/dtos/count-product.dto';
 import { ProductService } from '../product/product.service';
 import { Repository } from 'typeorm';
-=======
-import { ProductService } from 'src/product/product.service';
-import { Repository } from 'typeorm';
-import { CountProduct } from '../product/dtos/count-product.dto';
->>>>>>> ef7be204c79dd3042107038a54a47ba745d8c2bd
 import { CreateCategory } from './dtos/create-category.dto';
 import { ReturnCategory } from './dtos/return-category.dto';
 import { CategoryEntity } from './entities/category.entity';
@@ -25,10 +19,7 @@ export class CategoryService {
     @InjectRepository(CategoryEntity)
     private readonly categoryRepository: Repository<CategoryEntity>,
 
-<<<<<<< HEAD
     @Inject(forwardRef(() => ProductService))
-=======
->>>>>>> ef7be204c79dd3042107038a54a47ba745d8c2bd
     private readonly productService: ProductService,
   ) {}
 

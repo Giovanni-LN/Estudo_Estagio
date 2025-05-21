@@ -10,12 +10,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { CartProductEntity } from '../../cart-product/entities/cart-product.entity';
-<<<<<<< HEAD
 import { OrderProductEntity } from '../../order-product/entities/order-product.entity';
-=======
-import { CategoryEntity } from '../../category/entities/category.entity';
-//import { OrderProductEntity } from '../../order-product/entities/order-product.entity';
->>>>>>> ef7be204c79dd3042107038a54a47ba745d8c2bd
 
 @Entity({ name: 'product' })
 export class ProductEntity {
@@ -50,11 +45,6 @@ export class ProductEntity {
   @JoinColumn({ name: 'category_id', referencedColumnName: 'id' })
   category?: CategoryEntity;
 
-<<<<<<< HEAD
   @OneToMany(() => OrderProductEntity, (orderProduct) => orderProduct.product)
   ordersProduct?: OrderProductEntity[];
-=======
-  //@OneToMany(() => OrderProductEntity, (orderProduct) => orderProduct.product)
-  //ordersProduct?: OrderProductEntity[];
->>>>>>> ef7be204c79dd3042107038a54a47ba745d8c2bd
 }

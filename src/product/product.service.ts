@@ -12,7 +12,7 @@ import { CreateProductDTO } from './dtos/create-product.dto';
 import { UpdateProductDTO } from './dtos/update-procut.dto';
 import { ProductEntity } from './entities/product.entity';
 
-import { Pagination, PaginationMeta } from 'src/dtos/pagination.dto';
+import { Pagination, PaginationMeta } from '../dtos/pagination.dto';
 
 const DEFAULT_PAGE_SIZE = 10;
 const FIRST_PAGE = 1;

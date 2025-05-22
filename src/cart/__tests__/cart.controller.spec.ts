@@ -1,11 +1,11 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { returnDeleteMock } from '../../__mocks__/return-delete.mock';
 import { userEntityMock } from '../../user/__mocks__/user.mock';
-import { CartController } from '../cart.controller';
-import { CartService } from '../cart.service';
 import { cartMock } from '../__mocks__/cart.mock';
 import { insertCartMock } from '../__mocks__/insert-cart.mock';
 import { updateCartMock } from '../__mocks__/update-cart.mock';
+import { CartController } from '../cart.controller';
+import { CartService } from '../cart.service';
 
 describe('CartController', () => {
   let controller: CartController;
@@ -47,9 +47,7 @@ describe('CartController', () => {
   it('should cart Entity in insertProductInCart', async () => {
     const cart = await controller.findCartByUserId(userEntityMock.id);
 
-    expect(cart).toEqual({
-      id: cartMock.id,
-    });
+    expect(cart).toEqual(cartMock);
   });
 
   it('should return DeleteResult in clearCart', async () => {

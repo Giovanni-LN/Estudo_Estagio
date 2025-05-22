@@ -1,12 +1,14 @@
 import {
-    Body,
-    Controller,
-    Get,
-    Param,
-    Post,
-    UsePipes,
-    ValidationPipe,
+  Body,
+  Controller,
+  Get,
+  Param,
+  Post,
+  Res,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
+import { Response } from 'express';
 import { Roles } from '../decorators/roles.decorator';
 import { UserId } from '../decorators/user-id.decorator';
 import { UserType } from '../user/enum/user-type.enum';
@@ -30,8 +32,20 @@ export class OrderController {
   }
 
   @Get()
-  async findOrdersByUserId(@UserId() userId: number): Promise<OrderEntity[]> {
-    return this.orderService.findOrdersByUserId(userId);
+  async findOrdersByUserId(
+    @UserId() userId: number,
+    @Res({ passthrough: true }) res?: Response,
+  ): Promise<OrderEntity[]> {
+    const orders = await this.orderService
+      .findOrdersByUserId(userId)
+      .catch(() => undefined);
+
+    if (orders) {
+      return orders;
+    }
+
+    res.status(204).send();
+    return;
   }
 
   @Roles(UserType.Admin, UserType.Root)
@@ -46,9 +60,9 @@ export class OrderController {
   @Get('/:orderId')
   async findOrderById(
     @Param('orderId') orderId: number,
-  ): Promise<ReturnOrderDTO[]> {
-    return (await this.orderService.findOrdersByUserId(undefined, orderId)).map(
-      (order) => new ReturnOrderDTO(order),
+  ): Promise<ReturnOrderDTO> {
+    return new ReturnOrderDTO(
+      (await this.orderService.findOrdersByUserId(undefined, orderId))[0],
     );
   }
 }
